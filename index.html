@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dibyajyoti Prakash — Frontend Developer (Interactive Resume)</title>
+
+    <!-- Devicons (tech icons) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css"
+    />
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+    <!-- Google font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <meta name="theme-color" content="#0b1221" />
+
+    <style>
+      :root {
+        --bg-overlay: rgba(4, 6, 15, 0.6);
+        --glass: rgba(255, 255, 255, 0.04);
+        --accent: #7cf7ff;
+        --accent-2: #9b6bff;
+        --muted: #9aa4b2;
+        --card-radius: 18px;
+        --glass-border: rgba(255, 255, 255, 0.06);
+        --shadow: 0 10px 30px rgba(2, 6, 23, 0.6);
+        --neon: 0 0 20px rgba(124, 247, 255, 0.12),
+          0 0 40px rgba(155, 107, 255, 0.06);
+        font-family: "Outfit", "Inter", system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+      }
+
+      /* Background: Unsplash space image */
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: #e6f0ff;
+        background-image: url("https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1950&q=80");
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-y: auto;
+      }
+
+      /* dark overlay & animated starfield */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: linear-gradient(
+            180deg,
+            rgba(3, 6, 20, 0.5) 0%,
+            rgba(2, 4, 10, 0.75) 60%
+          ),
+          var(--bg-overlay);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* CSS starfield (multiple layers) */
+      .stars,
+      .stars2,
+      .stars3 {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background-repeat: repeat;
+        pointer-events: none;
+        opacity: 0.65;
+        mix-blend-mode: screen;
+      }
+
+      .stars {
+        background-image: radial-gradient(#fff 0.8px, transparent 1px);
+        background-size: 120px 120px;
+        animation: moveStars 60s linear infinite;
+        opacity: 0.45;
+      }
+
+      .stars2 {
+        background-image: radial-gradient(#cfeeff 0.6px, transparent 1px);
+        background-size: 80px 80px;
+        animation: moveStars 100s linear infinite reverse;
+        opacity: 0.28;
+      }
+
+      .stars3 {
+        background-image: radial-gradient(#9bbcff 0.5px, transparent 1px);
+        background-size: 40px 40px;
+        animation: moveStars 160s linear infinite;
+        opacity: 0.18;
+      }
+
+      @keyframes moveStars {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: -10000px 5000px;
+        }
+      }
+
+      /* Page layout */
+      .container {
+        max-width: 1100px;
+        margin: 48px auto;
+        position: relative;
+        z-index: 2;
+        padding: 32px;
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        gap: 28px;
+      }
+
+      /* Cards */
+      .card {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid var(--glass-border);
+        border-radius: var(--card-radius);
+        padding: 22px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(8px) saturate(120%);
+        position: relative;
+        overflow: hidden;
+        min-height: 520px;
+      }
+
+      .profile {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+
+      .avatar {
+        width: 96px;
+        height: 96px;
+        border-radius: 18px;
+        overflow: hidden;
+        flex: 0 0 96px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+      }
+
+      .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transform: scale(1.02);
+      }
+
+      h1 {
+        font-size: 20px;
+        margin: 0;
+        letter-spacing: -0.4px;
+        font-weight: 800;
+        color: #eaf8ff;
+        text-shadow: 0 2px 20px rgba(124, 247, 255, 0.06);
+      }
+
+      .role {
+        display: flex;
+        gap: 8px;
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 13px;
+        align-items: center;
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+        margin-top: 6px;
+        line-height: 1.35;
+      }
+
+      /* contact row */
+      .contact {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .contact button,
+      .contact a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border-radius: 12px;
+        padding: 10px 12px;
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        color: #e6f5ff;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: transform 0.14s ease, box-shadow 0.14s ease;
+        font-size: 14px;
+      }
+
+      .contact button:hover,
+      .contact a:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--neon);
+      }
+
+      .tiny {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 8px;
+      }
+
+      /* skills */
+      .section {
+        margin-top: 18px;
+      }
+
+      .section h3 {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        color: #bfefff;
+      }
+
+      .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+.badge {
+  position: relative; /* Needed for pseudo-element positioning */
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.02),
+    rgba(255, 255, 255, 0.01)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  font-size: 13px;
+  color: #eaffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 6px 14px rgba(2, 6, 23, 0.55);
+  text-decoration: none;
+  overflow: hidden; /* Clip shimmer overflow */
+}
+
+.badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+}
+
+.badge:hover::before {
+  animation: shimmer 1.2s ease-out forwards;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
+  }
+}
+
+
+      /* Right column (main) */
+      .main {
+        min-height: 520px;
+        padding: 22px;
+        border-radius: 20px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(6px) saturate(120%);
+        overflow: hidden;
+      }
+
+      .hero-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .hero-left {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .name-large {
+        font-size: 22px;
+        font-weight: 900;
+        letter-spacing: -0.6px;
+        color: #f0fbff;
+      }
+
+      .tagline {
+        color: var(--muted);
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      /* animated waveform / tech bar */
+      .wave {
+        height: 72px;
+        margin-top: 18px;
+        border-radius: 12px;
+        background: linear-gradient(
+          90deg,
+          rgba(124, 247, 255, 0.03),
+          rgba(155, 107, 255, 0.04)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .bars {
+        display: flex;
+        align-items: end;
+        gap: 6px;
+        padding: 14px;
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.95;
+      }
+
+      .bars span {
+        display: block;
+        width: 8px;
+        height: 40%;
+        background: linear-gradient(180deg, var(--accent), var(--accent-2));
+        border-radius: 6px;
+        transform-origin: bottom center;
+        animation: barPulse 1.2s ease-in-out infinite;
+        box-shadow: 0 6px 16px rgba(97, 40, 197, 0.12);
+      }
+
+      .bars span:nth-child(1) {
+        animation-delay: 0.05s;
+        height: 30%;
+      }
+      .bars span:nth-child(2) {
+        animation-delay: 0.15s;
+        height: 55%;
+      }
+      .bars span:nth-child(3) {
+        animation-delay: 0.25s;
+        height: 44%;
+      }
+      .bars span:nth-child(4) {
+        animation-delay: 0.35s;
+        height: 72%;
+      }
+      .bars span:nth-child(5) {
+        animation-delay: 0.45s;
+        height: 60%;
+      }
+      .bars span:nth-child(6) {
+        animation-delay: 0.55s;
+        height: 38%;
+      }
+      .bars span:nth-child(7) {
+        animation-delay: 0.65s;
+        height: 48%;
+      }
+
+      @keyframes barPulse {
+        0% {
+          transform: scaleY(0.5);
+          opacity: 0.6;
+        }
+        50% {
+          transform: scaleY(1.15);
+          opacity: 1;
+        }
+        100% {
+          transform: scaleY(0.6);
+          opacity: 0.7;
+        }
+      }
+
+      /* timeline & cards */
+      .timeline {
+        margin-top: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .job {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.015),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        padding: 14px;
+        border-radius: 12px;
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        transition: transform 0.16s ease, box-shadow 0.16s ease;
+      }
+
+      .job:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--neon);
+      }
+
+      .job .left {
+        min-width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: linear-gradient(90deg, var(--accent), var(--accent-2));
+        margin-top: 6px;
+        box-shadow: 0 6px 14px rgba(124, 247, 255, 0.08);
+      }
+
+      .job h4 {
+        margin: 0;
+        font-size: 15px;
+        color: #eaf8ff;
+      }
+
+      .job .meta {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 6px;
+      }
+
+      .job p {
+        margin: 8px 0 0 0;
+        color: #dff6ff;
+        font-size: 14px;
+        line-height: 1.45;
+      }
+
+      /* projects grid */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .project {
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.03),
+          rgba(255, 255, 255, 0.01)
+        );
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .project .meta {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .project .title {
+        color: #eaffff;
+        font-weight: 700;
+      }
+
+      /* small controls at top right */
+      .controls {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .icon-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: inline-grid;
+        place-items: center;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.015),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        cursor: pointer;
+        transition: transform 0.12s ease;
+      }
+
+      .icon-btn:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--neon);
+      }
+
+      /* footer / printable */
+      .actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .cta {
+        padding: 12px 14px;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(90deg, #7cf7ff, #9b6bff);
+        color: #071027;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 8px 30px rgba(124, 247, 255, 0.08);
+      }
+
+    .ghost {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: transparent;
+      color: #dff6ff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Wider panes and reduced outer paddings */
+    .container {
+      max-width: 1200px;
+      grid-template-columns: 400px 1fr;
+      padding: 18px;
+      margin: 24px auto;
+    }
+    .card,
+    .main {
+      min-width: 0;
+      min-height: 540px;
+      padding: 28px;
+    }
+    @media (max-width: 980px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 10px;
+        margin: 8px;
+      }
+      .card,
+      .main {
+        padding: 18px;
+      }
+    }
+
+      /* Skills table */
+      .skills-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 13px;
+      }
+
+      .skills-table th,
+      .skills-table td {
+        padding: 8px 6px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .skills-table th {
+        color: var(--accent);
+        font-weight: 700;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      .skills-table td {
+        color: #dff6ff;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+      }
+
+      /* Education section */
+      .education {
+        margin-top: 18px;
+        padding: 14px;
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.015),
+          rgba(255, 255, 255, 0.01)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+
+      .education h4 {
+        margin: 0 0 6px 0;
+        font-size: 15px;
+        color: #eaf8ff;
+      }
+
+      .education .meta {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      /* Certifications */
+      .certifications {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .cert {
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: linear-gradient(
+          90deg,
+          rgba(124, 247, 255, 0.05),
+          rgba(155, 107, 255, 0.05)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.03);
+        font-size: 12px;
+        color: #eaffff;
+      }
+
+      /* responsive */
+      @media (max-width: 980px) {
+        .container {
+          grid-template-columns: 1fr;
+          padding: 20px;
+          margin: 18px;
+        }
+
+        .hero-left {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 6px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .skills-table {
+          font-size: 12px;
+        }
+      }
+
+      /* small neon accent lines */
+      .neon-line {
+        position: absolute;
+        inset: auto 22px 22px auto;
+        width: 220px;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(124, 247, 255, 0.35),
+          transparent
+        );
+        filter: blur(10px);
+        transform: rotate(-3deg);
+      }
+
+      /* subtle hover tilt for cards */
+      .card,
+      .main {
+        transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.3, 1);
+      }
+
+      .card:hover,
+      .main:hover {
+        transform: translateY(-6px);
+      }
+
+      /* small animated pulse on name */
+      .pulse {
+        display: inline-block;
+        animation: pulseGlow 2.2s ease-in-out infinite;
+        border-radius: 6px;
+      }
+
+      @keyframes pulseGlow {
+        0% {
+          text-shadow: 0 0 0 rgba(124, 247, 255, 0);
+        }
+        50% {
+          text-shadow: 0 6px 30px rgba(124, 247, 255, 0.09);
+        }
+        100% {
+          text-shadow: 0 0 0 rgba(124, 247, 255, 0);
+        }
+      }
+
+      /* subtle tooltip style */
+      .tooltip {
+        background: #071127;
+        color: #bfefff;
+        padding: 8px 10px;
+        border-radius: 8px;
+        font-size: 13px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+      }
+
+      /* small badges for devicons usage example */
+      .devicons {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+
+      /* print rules */
+      @media print {
+        body {
+          background: white !important;
+          color: black !important;
+        }
+
+        .overlay,
+        .stars,
+        .controls,
+        .icon-btn {
+          display: none !important;
+        }
+
+        .container {
+          box-shadow: none;
+          background: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="overlay" aria-hidden="true"></div>
+    <div class="stars" aria-hidden="true"></div>
+    <div class="stars2" aria-hidden="true"></div>
+    <div class="stars3" aria-hidden="true"></div>
+
+    <div class="container" role="main">
+      <!-- LEFT column -->
+      <aside class="card" aria-label="Profile card">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <div class="profile">
+            <div class="avatar" title="Dibyajyoti Prakash">
+              <!-- placeholder avatar generated from initials (so no external personal images needed) -->
+              <svg
+                width="96"
+                height="96"
+                viewBox="0 0 96 96"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect width="96" height="96" rx="18" fill="url(#g)" />
+                <defs>
+                  <linearGradient
+                    id="g"
+                    x1="0"
+                    x2="96"
+                    y1="0"
+                    y2="96"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#7cf7ff" />
+                    <stop offset="1" stop-color="#9b6bff" />
+                  </linearGradient>
+                </defs>
+                <text
+                  x="50%"
+                  y="55%"
+                  dominant-baseline="middle"
+                  text-anchor="middle"
+                  font-family="Outfit, Inter, sans-serif"
+                  font-size="34"
+                  font-weight="800"
+                  fill="#02101a"
+                >
+                  DP
+                </text>
+              </svg>
+            </div>
+            <div>
+              <h1>Dibyajyoti Prakash</h1>
+              <div class="role">
+                <span style="font-size: 12px">Frontend Developer</span>
+              </div>
+              <div class="tiny">
+                Bhubaneswar • React.js • Tailwind • Accessibility
+              </div>
+            </div>
+          </div>
+
+         
+        </div>
+
+         <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              align-items: flex-end;
+            "
+          >
+            <div class="controls">
+              <div class="icon-btn" id="toggleTheme" title="Toggle neon/glass">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#9bdfff"
+                  stroke-width="1.6"
+                >
+                  <circle cx="12" cy="12" r="3"></circle>
+                  <path d="M12 3v2"></path>
+                  <path d="M12 19v2"></path>
+                  <path d="M3 12h2"></path>
+                  <path d="M19 12h2"></path>
+                </svg>
+              </div>
+              <div class="icon-btn" id="printBtn" title="Print / Save as PDF">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#9bdfff"
+                  stroke-width="1.6"
+                >
+                  <path d="M6 9V3h12v6"></path>
+                  <path
+                    d="M6 14H4a1 1 0 0 0-1 1v4h18v-4a1 1 0 0 0-1-1h-2"
+                  ></path>
+                  <rect x="8" y="14" width="8" height="6" rx="1"></rect>
+                </svg>
+              </div>
+            </div>
+            <div class="neon-line" aria-hidden="true"></div>
+          </div>
+
+        <div class="contact">
+          <button id="copyEmail" title="Copy email">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#9b6bff"
+              stroke-width="1.6"
+            >
+              <path d="M4 4h16v16H4z"></path>
+              <path d="M22 6l-10 7L2 6"></path>
+            </svg>
+            dibyajyoti.prakash2025@gmail.com
+          </button>
+
+          <button id="callPhone" title="Start call (tel:)">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#7cf7ff"
+              stroke-width="1.6"
+            >
+              <path
+                d="M22 16.92V20a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.86 19.86 0 0 1-3.07-8.63A2 2 0 0 1 4 2h3.09a1 1 0 0 1 1 .75c.12.66.37 1.9.8 2.9a1 1 0 0 1-.23 1L7.6 9.6a14 14 0 0 0 6 6l1.95-1.95a1 1 0 0 1 1-.23c1 .43 2.24.68 2.9.8a1 1 0 0 1 .75 1V20z"
+              ></path>
+            </svg>
+            +91 7978849703
+          </button>
+
+          <a
+            class="ghost"
+            id="portfolioLink"
+            href="https://portfolio.dibyaserver.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#cfefff"
+              stroke-width="1.6"
+            >
+              <path d="M3 12h3l3 8 4-16 3 8h4"></path>
+            </svg>
+            portfolio.dibyaserver.in
+          </a>
+        </div>
+
+        <div class="section">
+          <h3>Summary</h3>
+          <p class="muted">
+            Frontend Developer with 1.5+ years of experience building scalable,
+            responsive, and accessible web applications using React.js,
+            JavaScript (ES6+), Tailwind CSS, and REST APIs. Proven track record
+            of improving performance, reducing load times, and enhancing UX.
+          </p>
+        </div>
+
+        <div class="section">
+          <h3>Certifications</h3>
+          <div class="certifications">
+            <span class="cert">Meta Front-End Developer (Coursera)</span>
+            <span class="cert">Responsive Web Design (freeCodeCamp)</span>
+            <span class="cert"
+              >JavaScript Algorithms & Data Structures (freeCodeCamp)</span
+            >
+          </div>
+        </div>
+
+        <div class="section">
+          <h3>Other Strengths</h3>
+          <p class="muted">
+            Strong communication and collaboration in Agile teams. Passionate
+            about performance optimization and clean UI/UX. Quick learner and
+            self-starter with an eye for detail.
+          </p>
+        </div>
+      </aside>
+
+      <!-- RIGHT column -->
+      <main class="main" aria-label="Resume content">
+        <div class="hero-row">
+          <div class="hero-left">
+            <div>
+              <div class="name-large pulse">Dibyajyoti Prakash</div>
+              <div class="tagline">
+                Frontend Developer — building accessible, high-performance React
+                apps
+              </div>
+            </div>
+            <div style="margin-left: 12px">
+              <small class="tiny"
+                >B.Tech (CSE) • CGPA 7.63 • ITER • Bhubaneswar</small
+              >
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 10px; align-items: center">
+            <div style="text-align: right">
+              <div class="tiny">Experience</div>
+              <div style="font-weight: 800; color: #eaf8ff">1.5+ yrs</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="wave" aria-hidden="true">
+          <div class="bars" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span
+            ><span></span><span></span>
+          </div>
+        </div>
+
+        <!-- professional experience -->
+        <div class="timeline" id="experience">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <h3 style="margin: 0; color: #bfefff">Professional Experience</h3>
+            <div class="tiny" style="color: var(--muted)">Latest first</div>
+          </div>
+
+          <div class="job">
+            <div class="left" aria-hidden="true"></div>
+            <div>
+              <h4>
+                E Square System & Technologies Pvt Ltd — Junior Frontend
+                Developer
+              </h4>
+              <div class="meta">Jan 2024 – Present • Bhubaneswar</div>
+              <p>
+                Spearheaded frontend development for 3 major platforms (Subhadra
+                Scheme, CM Dashboard, ESKRO), leading to a 25% reduction in
+                support tickets and a 30% boost in platform uptime. Improved app
+                performance by 25% and user engagement by 30% through
+                code-splitting, lazy loading, and optimized rendering. Created
+                reusable, accessible UI components using React, Tailwind CSS,
+                and Flowbite. Implemented real-time dashboards using Highcharts,
+                cutting data retrieval times by 50% and improving executive
+                decision speed. Collaborated with cross-functional teams in
+                Agile sprints to deliver critical modules on time.
+              </p>
+            </div>
+          </div>
+
+          <div class="job">
+            <div class="left" aria-hidden="true"></div>
+            <div>
+              <h4>Wayindia Software Solution — Junior Software Developer</h4>
+              <div class="meta">Oct 2023 – Jan 2024 • Bhubaneswar</div>
+              <p>
+                Created 20+ reusable, performance-optimized React components,
+                reducing development time for new features by 30%. Used Redux
+                for efficient state management, improving responsiveness and UX
+                consistency. Developed key frontend features for New Bharat Biz
+                marketplace focusing on eco-conscious shopping experience.
+                Integrated 6+ third-party RESTful APIs and improved API handling
+                with custom React hooks, reducing API errors by 60%.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- education -->
+        <div class="education">
+          <h4>Institute of Technical Education and Research (ITER)</h4>
+          <div class="meta">
+            Bachelor of Technology in Computer Science Engineering • Jul 2019 –
+            Jul 2023 • Bhubaneswar
+          </div>
+          <p class="muted" style="margin-top: 8px">CGPA: 7.63</p>
+        </div>
+
+        <!-- projects -->
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+          "
+        >
+          <h3 style="margin: 0; color: #bfefff">Selected Projects</h3>
+          <div class="tiny" style="color: var(--muted)">
+            React • Web APIs • Audio • Accessibility
+          </div>
+        </div>
+
+        <div class="grid" role="list">
+          <div class="project" role="listitem">
+            <div>
+              <div class="title">IzyCompress</div>
+              <div class="meta">
+                React-based image compression app using Canvas API for
+                in-browser lossless compression, reducing average file size by
+                70% while maintaining visual fidelity.
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px">
+              <a
+                class="ghost"
+                href="https://dibyaserver.in/izycomp"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open</a
+              >
+            </div>
+          </div>
+
+          <div class="project" role="listitem">
+            <div>
+              <div class="title">AccessiSite</div>
+              <div class="meta">
+                Inclusive web application built with React.js to improve digital
+                accessibility through keyboard navigation, contrast toggle, and
+                font-size adjustments.
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px">
+              <a
+                class="ghost"
+                href="https://dibyaserver.in/accessibility"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open</a
+              >
+            </div>
+          </div>
+
+          <div class="project" role="listitem">
+            <div>
+              <div class="title">ThunkAPI</div>
+              <div class="meta">
+                Postman-lite API testing platform built with React and Axios,
+                featuring endpoint debugging, request history, and real-time
+                status indicators.
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px">
+              <a
+                class="ghost"
+                href="https://dibyaserver.in/api/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open</a
+              >
+            </div>
+          </div>
+
+          <div class="project" role="listitem">
+            <div>
+              <div class="title">Spotify Clone Web Application</div>
+              <div class="meta">
+                Developed music player with audio visualizer using Howler.js &
+                Web Audio API. Features: playlist management, equalizer,
+                responsive UI with Tailwind CSS.
+              </div>
+            </div>
+            <div style="display: flex; gap: 8px">
+              <a
+                class="ghost"
+                href="https://dibyaserver.in/spotify-clone"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Open</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Skills (moved to right pane) -->
+<div class="section" id="skills">
+  <h3>Skills</h3>
+  <table class="skills-table">
+    <tr>
+      <th>Languages</th>
+      <td>
+        <div class="badges">
+          <a class="badge" href="https://developer.mozilla.org/docs/Web/JavaScript" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-javascript-plain colored"></i> JavaScript (ES6+)
+          </a>
+          <a class="badge" href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-typescript-plain colored"></i> TypeScript
+          </a>
+          <a class="badge" href="https://developer.mozilla.org/docs/Web/HTML" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-html5-plain colored"></i> HTML5
+          </a>
+          <a class="badge" href="https://developer.mozilla.org/docs/Web/CSS" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-css3-plain colored"></i> CSS3
+          </a>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Frontend</th>
+      <td>
+        <div class="badges">
+          <a class="badge" href="https://react.dev/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-react-original colored"></i> React.js
+          </a>
+          <a class="badge" href="https://redux.js.org/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-redux-original colored"></i> Redux
+          </a>
+          <a class="badge" href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-tailwindcss-plain colored"></i> Tailwind CSS
+          </a>
+          <a class="badge" href="https://flowbite.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-css3-plain colored"></i> Flowbite
+          </a>
+          <a class="badge" href="https://axios-http.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-axios-plain"></i> Axios
+          </a>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Backend</th>
+      <td>
+        <div class="badges">
+          <a class="badge" href="https://nodejs.org/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-nodejs-plain colored"></i> Node.js
+          </a>
+          <a class="badge" href="https://expressjs.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-express-original colored"></i> Express.js
+          </a>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Databases</th>
+      <td>
+        <div class="badges">
+          <a class="badge" href="https://www.mongodb.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-mongodb-plain colored"></i> MongoDB
+          </a>
+          <a class="badge" href="https://www.mysql.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-mysql-plain colored"></i> MySQL
+          </a>
+          <a class="badge" href="https://learn.microsoft.com/sql/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-microsoftsqlserver-plain colored"></i> SQL Server
+          </a>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Tools & Version Control</th>
+      <td>
+        <div class="badges">
+          <a class="badge" href="https://git-scm.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-git-plain colored"></i> Git
+          </a>
+          <a class="badge" href="https://github.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-github-original colored"></i> GitHub
+          </a>
+          <a class="badge" href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-vscode-plain colored"></i> VS Code
+          </a>
+          <a class="badge" href="https://www.postman.com/" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-postman-plain colored"></i> Postman
+          </a>
+          <a class="badge" href="https://developer.chrome.com/docs/devtools" target="_blank" rel="noopener noreferrer">
+            <i class="devicon-chrome-plain colored"></i> Chrome DevTools
+          </a>
+        </div>
+      </td>
+    </tr>
+
+    <tr>
+      <th>Others</th>
+      <td>
+        <div class="badges">
+          <a class="badge" href="https://web.dev/learn/design/" target="_blank" rel="noopener noreferrer">Responsive Design</a>
+          <a class="badge" href="https://restfulapi.net/" target="_blank" rel="noopener noreferrer">REST APIs</a>
+          <a class="badge" href="https://www.atlassian.com/agile" target="_blank" rel="noopener noreferrer">Agile</a>
+          <a class="badge" href="https://www.w3.org/WAI/fundamentals/accessibility-intro/" target="_blank" rel="noopener noreferrer">Web Accessibility</a>
+          <a class="badge" href="https://web.dev/fast/" target="_blank" rel="noopener noreferrer">Performance Optimization</a>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+        <div class="actions" style="margin-top: 18px">
+          <button class="cta" id="downloadBtn" title="Print / Save as PDF">
+            Export as PDF
+          </button>
+          <button class="ghost" id="copyResume" title="Copy summary">
+            Copy Summary
+          </button>
+          <button class="ghost" id="viewResume" title="View plain resume">
+            View Plain
+          </button>
+        </div>
+
+        <div style="margin-top: 16px; font-size: 13px; color: var(--muted)">
+          <strong>Languages:</strong> English (Professional), Hindi
+          (Professional), Odia (Native)
+        </div>
+
+        <div style="margin-top: 10px; font-size: 12px; color: var(--muted)">
+          <strong>Interests:</strong> Web Performance, Accessibility, UI/UX
+          Design, Open Source Contribution
+        </div>
+
+        <div style="margin-top: 16px" class="tiny">
+          Note: This interactive resume includes all information from your
+          uploaded PDF resume.
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // Activate lucide icons
+      if (window.lucide) {
+        try {
+          lucide.createIcons();
+        } catch (e) {
+          /* ignore */
+        }
+      }
+
+      // Simple helpers
+      const email = "dibyajyoti.prakash2025@gmail.com";
+      const phone = "+91 7978849703";
+
+      document
+        .getElementById("copyEmail")
+        .addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(email);
+            showToast("Email copied to clipboard ✨");
+          } catch (e) {
+            showToast("Could not copy — select and copy manually.");
+          }
+        });
+
+      document.getElementById("callPhone").addEventListener("click", () => {
+        // open tel: on supported
+        window.open("tel:" + phone.replace(/\s+/g, ""), "_self");
+      });
+
+      // Print / Export
+      document
+        .getElementById("printBtn")
+        .addEventListener("click", () => window.print());
+      document
+        .getElementById("downloadBtn")
+        .addEventListener("click", () => window.print());
+
+      // Toggle theme (simple neon pulse / remove overlay)
+      const toggleThemeBtn = document.getElementById("toggleTheme");
+      let neon = true;
+      toggleThemeBtn.addEventListener("click", () => {
+        neon = !neon;
+        if (!neon) {
+          document.documentElement.style.setProperty("--accent", "#9aa4b2");
+          document.documentElement.style.setProperty("--accent-2", "#7f8a99");
+          showToast("Switched to low-neon mode");
+        } else {
+          document.documentElement.style.setProperty("--accent", "#7cf7ff");
+          document.documentElement.style.setProperty("--accent-2", "#9b6bff");
+          showToast("Neon mode: engaged 🚀");
+        }
+      });
+
+      // Copy resume summary
+      document
+        .getElementById("copyResume")
+        .addEventListener("click", async () => {
+          const summary = `Dibyajyoti Prakash — Frontend Developer\nEmail: ${email}\nPhone: ${phone}\nExperience: 1.5+ years building React + Tailwind frontends, accessibility, performance optimization.\nPortfolio: https://portfolio.dibyaserver.in/`;
+          try {
+            await navigator.clipboard.writeText(summary);
+            showToast("Resume summary copied ✅");
+          } catch (e) {
+            showToast("Failed to copy summary.");
+          }
+        });
+
+      // View plain (toggle to simplified view)
+      document.getElementById("viewResume").addEventListener("click", () => {
+        const main = document.querySelector(".main");
+        main.classList.toggle("compact");
+        showToast("Toggled plain view");
+        // simulate simple transform
+        if (main.classList.contains("compact")) {
+          main.style.background = "rgba(10,12,18,0.95)";
+        } else {
+          main.style.background = "";
+        }
+      });
+
+      // Small toast notifications
+      function showToast(msg) {
+        const t = document.createElement("div");
+        t.className = "tooltip";
+        t.style.position = "fixed";
+        t.style.bottom = "30px";
+        t.style.left = "50%";
+        t.style.transform = "translateX(-50%)";
+        t.style.zIndex = 9999;
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(() => (t.style.opacity = "0"), 1800);
+        setTimeout(() => t.remove(), 2300);
+      }
+
+      // Accessibility: keyboard shortcuts
+      window.addEventListener("keydown", (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "p") {
+          e.preventDefault();
+          window.print();
+        }
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "c") {
+          // ctrl/c copies email
+          navigator.clipboard &&
+            navigator.clipboard
+              .writeText(email)
+              .then(() => showToast("Email copied via ⌘/Ctrl+C"));
+        }
+      });
+
+      // small entrance animation
+      window.addEventListener("load", () => {
+        document.querySelectorAll(".card, .main").forEach((el, i) => {
+          el.style.transform = "translateY(18px)";
+          el.style.opacity = "0";
+          setTimeout(() => {
+            el.style.transition =
+              "transform 600ms cubic-bezier(.2,.9,.3,1), opacity 400ms";
+            el.style.transform = "translateY(0)";
+            el.style.opacity = "1";
+          }, 160 * i);
+        });
+      });
+    </script>
+  </body>
+</html>
